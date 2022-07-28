@@ -10,7 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cron": "^2.1.0",
+    "dotenv": "^16.0.1",
     "express": "^4.17.1",
-    "request": "^2.88.0"
+    "nodemon": "^2.0.19",
+    "request": "^2.88.0",
+    "twilio": "^3.80.0"
   }
 }

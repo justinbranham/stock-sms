@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 
 dotenv.config();
 
-const cronTime = '* * * * *';
+const cronTime = '1 16 * * *';
 const client=  twilio(process.env.ACCOUNTSID,process.env.AUTHTOKEN);
 
 

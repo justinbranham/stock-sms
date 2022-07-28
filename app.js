@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({
 
 dotenv.config();
 
-const cronTime = '52 23 * * *';
+const cronTime = '* * * * *';
 const client=  twilio(process.env.ACCOUNTSID,process.env.AUTHTOKEN);
 
 
@@ -33,6 +33,7 @@ const jobSpy = new CronJob(
       } else {
         // data is successfully parsed as a JSON object
         const close = String(Object.values(Object.values(Object.values(data)[1])[0])[3]);
+        console.log(close);
         client.messages.create ({
           to: process.env.YOURPHONENUMBER,
           from: process.env.YOURTWILIOPHONENUMBER,
@@ -62,6 +63,7 @@ const jobBaba = new CronJob(
       } else {
         // data is successfully parsed as a JSON object
         const close = String(Object.values(Object.values(Object.values(data)[1])[0])[3]);
+        console.log(close);
         client.messages.create ({
           to: process.env.YOURPHONENUMBER,
           from: process.env.YOURTWILIOPHONENUMBER,
@@ -91,6 +93,7 @@ const jobMnkd = new CronJob(
       } else {
         // data is successfully parsed as a JSON object
         const close = String(Object.values(Object.values(Object.values(data)[1])[0])[3]);
+        console.log(close);
         client.messages.create ({
           to: process.env.YOURPHONENUMBER,
           from: process.env.YOURTWILIOPHONENUMBER,
@@ -120,6 +123,7 @@ const jobFtrp = new CronJob(
       } else {
         // data is successfully parsed as a JSON object
         const close = String(Object.values(Object.values(Object.values(data)[1])[0])[3]);
+        console.log(close);
         client.messages.create ({
           to: process.env.YOURPHONENUMBER,
           from: process.env.YOURTWILIOPHONENUMBER,

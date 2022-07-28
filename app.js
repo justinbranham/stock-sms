@@ -14,12 +14,12 @@ app.use(bodyParser.urlencoded({
 
 dotenv.config();
 
-
+const cronTime = '52 23 * * *';
 const client=  twilio(process.env.ACCOUNTSID,process.env.AUTHTOKEN);
 
 
 const jobSpy = new CronJob(
-  '45 23 * * *',
+  cronTime,
   function(){
     request.get({
       url: 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=SPY&apikey='+ process.env.ALPHAVANTAGEKEY,
@@ -48,7 +48,7 @@ true,
 );
 
 const jobBaba = new CronJob(
-  '45 23 * * *',
+  cronTime,
   function(){
     request.get({
       url: 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BABA&apikey='+ process.env.ALPHAVANTAGEKEY,
@@ -77,7 +77,7 @@ const jobBaba = new CronJob(
 );
 
 const jobMnkd = new CronJob(
-  '45 23 * * *',
+  cronTime,
   function(){
     request.get({
       url: 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MNKD&apikey='+ process.env.ALPHAVANTAGEKEY,
@@ -106,7 +106,7 @@ true,
 );
 
 const jobFtrp = new CronJob(
-  '45 23 * * *',
+  cronTime,
   function(){
     request.get({
       url: 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=FTRP&apikey='+ process.env.ALPHAVANTAGEKEY,
@@ -135,7 +135,7 @@ true,
 );
 
 const jobIcpt = new CronJob(
-  '45 23 * * *',
+  cronTime,
   function(){
     request.get({
       url: 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=ICPT&apikey='+ process.env.ALPHAVANTAGEKEY,

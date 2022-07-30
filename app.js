@@ -6,6 +6,7 @@ const app = express();
 const twilio = require("twilio");
 const CronJob = require("cron").CronJob;
 const dotenv = require("dotenv");
+const finnhub = require("finnhub");
 
 app.use(express.static("public"));
 app.use(
@@ -16,236 +17,131 @@ app.use(
 
 dotenv.config();
 
-const cronTime = "1 17 * * *";
+const cronTime = "1 16 * * *";
 const client = twilio(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
 
-// const jobSpy = new CronJob(
-//   cronTime,
-//   function(){
-//     request.get({
-//       url: 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=SPY&apikey='+ process.env.ALPHAVANTAGEKEY,
-//       json: true,
-//       headers: {'User-Agent': 'request'}
-//     }, (err, res, data) => {
-//       if (err) {
-//         console.log('Error:', err);
-//       } else if (res.statusCode !== 200) {
-//         console.log('Status:', res.statusCode);
-//       } else {
-//         // data is successfully parsed as a JSON object
-//         const close = String(Object.values(Object.values(Object.values(data)[1])[0])[3]);
-//         console.log(close);
-//         client.messages.create ({
-//           to: process.env.YOURPHONENUMBER,
-//           from: process.env.YOURTWILIOPHONENUMBER,
-//           body: 'SPY ' + close
-//         });
-//       }
-//     });
+const api_key = finnhub.ApiClient.instance.authentications["api_key"];
+api_key.apiKey = process.env.FINNHUBAPIKEY;
+const finnhubClient = new finnhub.DefaultApi();
 
-//   },
-// null,
-// true,
-// 'America/New_York'
-// );
+let prices = [];
+
+// for (let i = 0; i < 3; i++) {
+// }
+
+// finnhubClient.quote("FTRP", (error, data, response) => {
+//   prices.push(data.c);
+//   console.log("third " + prices);
+//   client.messages.create({
+//     to: process.env.YOURPHONENUMBER,
+//     from: process.env.YOURTWILIOPHONENUMBER,
+//     body:
+//       // prettier-ignore
+//       "- - - - - - - - - - - - -\n\n" +
+//       "BABA cost 146.70 close " + prices[0] + "\n\n" +
+//       "MNKD cost 4.991 close " + prices[1] + "\n\n" +
+//       "FTRP cost 2.394 close " + prices[2] +"\n\n" +
+//       "- - - - - - - - - - - - - - - - - - -",
+//   });
+// });
 
 const jobBaba = new CronJob(
   cronTime,
   function () {
-    request.get(
-      {
-        url:
-          "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BABA&apikey=" +
-          process.env.ALPHAVANTAGEKEY,
-        json: true,
-        headers: { "User-Agent": "request" },
-      },
-      (err, res, data) => {
-        if (err) {
-          console.log("Error:", err);
-        } else if (res.statusCode !== 200) {
-          console.log("Status:", res.statusCode);
-        } else {
-          // data is successfully parsed as a JSON object
-          const close = String(
-            Object.values(Object.values(Object.values(data)[1])[0])[3]
-          );
-          console.log(close);
-          client.messages.create({
-            to: process.env.YOURPHONENUMBER,
-            from: process.env.YOURTWILIOPHONENUMBER,
-            body: "BABA cost/share 146.70 close " + close,
-          });
-        }
-      }
-    );
+    finnhubClient.quote("BABA", (error, data, response) => {
+      //prices.push(data.c);
+      //console.log("first " + prices);
+      client.messages.create({
+        to: process.env.YOURPHONENUMBER,
+        from: process.env.YOURTWILIOPHONENUMBER,
+        body:
+          // prettier-ignore
+          "- - - - - - - - - - - - -\n\n" +
+      "BABA close " + data.c + " cost 146.70" + "\n\n" +
+      "- - - - - - - - - - - - - - - - - - -",
+      });
+    });
+
+    // setTimeout(() => {
+    //   console.log("Waiting 1 second");
+    // }, 1000);
+
+    finnhubClient.quote("MNKD", (error, data, response) => {
+      //prices.push(data.c);
+      //console.log("second" + prices);
+      client.messages.create({
+        to: process.env.YOURPHONENUMBER,
+        from: process.env.YOURTWILIOPHONENUMBER,
+        body:
+          // prettier-ignore
+          "- - - - - - - - - - - - -\n\n" +
+      "MNKD close " + data.c + " cost 4.991"+ "\n\n" +
+      "- - - - - - - - - - - - - - - - - - -",
+      });
+    });
+
+    // setTimeout(() => {
+    //   console.log("Waiting 1 second");
+    // }, 1000);
+
+    finnhubClient.quote("FTRP", (error, data, response) => {
+      prices.push(data.c);
+      //console.log("third " + prices);
+      client.messages.create({
+        to: process.env.YOURPHONENUMBER,
+        from: process.env.YOURTWILIOPHONENUMBER,
+        body:
+          // prettier-ignore
+          "- - - - - - - - - - - - -\n\n" +
+      "FTRP close " + data.c + " cost 2.394" +"\n\n" + 
+      "- - - - - - - - - - - - - - - - - - -",
+      });
+    });
   },
   null,
   true,
   "America/New_York"
 );
 
-const jobMnkd = new CronJob(
-  cronTime,
-  function () {
-    request.get(
-      {
-        url:
-          "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MNKD&apikey=" +
-          process.env.ALPHAVANTAGEKEY,
-        json: true,
-        headers: { "User-Agent": "request" },
-      },
-      (err, res, data) => {
-        if (err) {
-          console.log("Error:", err);
-        } else if (res.statusCode !== 200) {
-          console.log("Status:", res.statusCode);
-        } else {
-          // data is successfully parsed as a JSON object
-          const close = String(
-            Object.values(Object.values(Object.values(data)[1])[0])[3]
-          );
-          console.log(close);
-          client.messages.create({
-            to: process.env.YOURPHONENUMBER,
-            from: process.env.YOURTWILIOPHONENUMBER,
-            body: "MNKD cost/share 4.991 close " + close,
-          });
-        }
-      }
-    );
-  },
-  null,
-  true,
-  "America/New_York"
-);
-
-const jobFtrp = new CronJob(
-  cronTime,
-  function () {
-    request.get(
-      {
-        url:
-          "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=FTRP&apikey=" +
-          process.env.ALPHAVANTAGEKEY,
-        json: true,
-        headers: { "User-Agent": "request" },
-      },
-      (err, res, data) => {
-        if (err) {
-          console.log("Error:", err);
-        } else if (res.statusCode !== 200) {
-          console.log("Status:", res.statusCode);
-        } else {
-          // data is successfully parsed as a JSON object
-          const close = String(
-            Object.values(Object.values(Object.values(data)[1])[0])[3]
-          );
-          console.log(close);
-          client.messages.create({
-            to: process.env.YOURPHONENUMBER,
-            from: process.env.YOURTWILIOPHONENUMBER,
-            body: "FTRP cost/share 2.394 close " + close,
-          });
-        }
-      }
-    );
-  },
-  null,
-  true,
-  "America/New_York"
-);
-
-// const jobIcpt = new CronJob(
+// const jobMnkd = new CronJob(
 //   cronTime,
-//   function(){
-//     request.get({
-//       url: 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=ICPT&apikey='+ process.env.ALPHAVANTAGEKEY,
-//       json: true,
-//       headers: {'User-Agent': 'request'}
-//     }, (err, res, data) => {
-//       if (err) {
-//         console.log('Error:', err);
-//       } else if (res.statusCode !== 200) {
-//         console.log('Status:', res.statusCode);
-//       } else {
-//         // data is successfully parsed as a JSON object
-//         const close = String(Object.values(Object.values(Object.values(data)[1])[0])[3]);
-//         client.messages.create ({
-//           to: process.env.YOURPHONENUMBER,
-//           from: process.env.YOURTWILIOPHONENUMBER,
-//           body: 'ICPT ' + close
-//         });
-//       }
-//     });
+//   function () {
+//     const api_key = finnhub.ApiClient.instance.authentications["api_key"];
+//     api_key.apiKey = process.env.FINNHUBAPIKEY;
+//     const finnhubClient = new finnhub.DefaultApi();
 
+//     finnhubClient.quote("MNKD", (error, data, response) => {
+//       client.messages.create({
+//         to: process.env.YOURPHONENUMBER,
+//         from: process.env.YOURTWILIOPHONENUMBER,
+//         body: "MNKD cost/share 4.991 close " + data.c,
+//       });
+//     });
 //   },
-// null,
-// true,
-// 'America/New_York'
+//   null,
+//   true,
+//   "America/New_York"
 // );
 
-// function getBabaData(){
-//         const babaUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=BABA&apikey='+ process.env.ALPHAVANTAGEKEY;
+// const jobFtrp = new CronJob(
+//   cronTime,
+//   function () {
+//     const api_key = finnhub.ApiClient.instance.authentications["api_key"];
+//     api_key.apiKey = process.env.FINNHUBAPIKEY;
+//     const finnhubClient = new finnhub.DefaultApi();
 
-//         request.get({
-//             url: babaUrl,
-//             json: true,
-//             headers: {'User-Agent': 'request'}
-//           }, (err, res, data) => {
-//             if (err) {
-//               console.log('Error:', err);
-//             } else if (res.statusCode !== 200) {
-//               console.log('Status:', res.statusCode);
-//             } else {
-//               // data is successfully parsed as a JSON object:
-//               const babaClose = String(Object.values(Object.values(Object.values(data)[1])[0])[3]);
-//               console.log(babaClose)
-//               return babaClose;
-//             }
-//         });
-// }
-
-// let getBabaDataOutput = getBabaData();
-// console.log(getBabaDataOutput);
-
-// const mnkdUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MNKD&apikey='+ process.env.ALPHAVANTAGEKEY;
-//
-// request.get({
-//     url: mnkdUrl,
-//     json: true,
-//     headers: {'User-Agent': 'request'}
-//   }, (err, res, data) => {
-//     if (err) {
-//       console.log('Error:', err);
-//     } else if (res.statusCode !== 200) {
-//       console.log('Status:', res.statusCode);
-//     } else {
-//       // data is successfully parsed as a JSON object:
-//       const mnkdClose = Object.values(Object.values(Object.values(data)[1])[0])[3];
-//       //console.log(mnkdClose);
-//     }
-// });
-
-// const spyUrl = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=SPY&apikey='+ process.env.ALPHAVANTAGEKEY;
-
-// request.get({
-//     url: spyUrl,
-//     json: true,
-//     headers: {'User-Agent': 'request'}
-//   }, (err, res, data) => {
-//     if (err) {
-//       console.log('Error:', err);
-//     } else if (res.statusCode !== 200) {
-//       console.log('Status:', res.statusCode);
-//     } else {
-//       // data is successfully parsed as a JSON object:
-//       const spyClose = Object.values(Object.values(Object.values(data)[1])[0])[3];
-//       //console.log(spyClose);
-//       return spyClose;
-//     }
-// });
+//     finnhubClient.quote("FTRP", (error, data, response) => {
+//       client.messages.create({
+//         to: process.env.YOURPHONENUMBER,
+//         from: process.env.YOURTWILIOPHONENUMBER,
+//         body: "Ftrp cost/share 2.394 close " + data.c,
+//       });
+//     });
+//   },
+//   null,
+//   true,
+//   "America/New_York"
+// );
 
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/signup.html");

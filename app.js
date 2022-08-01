@@ -17,7 +17,7 @@ app.use(
 
 dotenv.config();
 
-const cronTime = "* * * * *";
+const cronTime = "1 16 * * *";
 const client = twilio(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
 
 const api_key = finnhub.ApiClient.instance.authentications["api_key"];

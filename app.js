@@ -50,14 +50,14 @@ const jobBaba = new CronJob(
   function () {
     finnhubClient.quote("BABA", (error, data, response) => {
       //prices.push(data.c);
-      //console.log("first " + prices);
+      console.log(data);
       client.messages.create({
         to: process.env.YOURPHONENUMBER,
         from: process.env.YOURTWILIOPHONENUMBER,
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "BABA close " + data.c + " cost 146.70" + "\n\n" +
+      // "BABA close " + data.c + " cost 146.70" + "\n\n" +
       "- - - - - - - - - - - - - - - - - - -",
       });
     });
@@ -75,7 +75,7 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "MNKD close " + data.c + " cost 4.991"+ "\n\n" +
+      // "MNKD close " + data.c + " cost 4.991"+ "\n\n" +
       "- - - - - - - - - - - - - - - - - - -",
       });
     });
@@ -94,7 +94,7 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "FTRP close " + data.c + " cost 2.394" +"\n\n" + 
+      // "FTRP close " + data.c + " cost 2.394" +"\n\n" + 
       "- - - - - - - - - - - - - - - - - - -",
       });
     });

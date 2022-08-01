@@ -87,6 +87,7 @@ const jobBaba = new CronJob(
     finnhubClient.quote("FTRP", (error, data, response) => {
       //prices.push(data.c);
       //console.log("third " + prices);
+      //
       client.messages.create({
         to: process.env.YOURPHONENUMBER,
         from: process.env.YOURTWILIOPHONENUMBER,

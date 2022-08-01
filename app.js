@@ -50,9 +50,9 @@ const jobBaba = new CronJob(
   function () {
     finnhubClient.quote("BABA", (error, data, response) => {
       //prices.push(data.c);
-      console.log(error);
-      console.log(data);
-      console.log(response);
+      // console.log(error);
+      // console.log(data);
+      // console.log(response);
       client.messages.create({
         to: process.env.YOURPHONENUMBER,
         from: process.env.YOURTWILIOPHONENUMBER,

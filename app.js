@@ -86,7 +86,7 @@ const jobBaba = new CronJob(
     //   console.log("Waiting 1 second");
     // }, 1000);
 
-    finnhubClient.quote("FTRP", (error, data, response) => {
+    finnhubClient.quote("REUN", (error, data, response) => {
       //prices.push(data.c);
       //console.log("third " + prices);
       //
@@ -96,7 +96,7 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "FTRP close " + data.c + " cost 2.394" +"\n\n" + 
+      "REUN close " + data.c + " cost around 9.39" +"\n\n" + 
       "- - - - - - - - - - - - - - - - - - -",
       });
     });

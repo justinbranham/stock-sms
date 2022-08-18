@@ -85,7 +85,6 @@ const jobBaba = new CronJob(
     // setTimeout(() => {
     //   console.log("Waiting 1 second");
     // }, 1000);
-
     finnhubClient.quote("REUN", (error, data, response) => {
       //prices.push(data.c);
       //console.log("third " + prices);
@@ -96,7 +95,22 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "REUN close " + data.c + " cost around 9.39" +"\n\n" + 
+      "REUN close " + data.c + " cost around 10.25" +"\n\n" + 
+      "- - - - - - - - - - - - - - - - - - -",
+      });
+    });
+
+    finnhubClient.quote("FTHWF", (error, data, response) => {
+      //prices.push(data.c);
+      //console.log("third " + prices);
+      //
+      client.messages.create({
+        to: process.env.YOURPHONENUMBER,
+        from: process.env.YOURTWILIOPHONENUMBER,
+        body:
+          // prettier-ignore
+          "- - - - - - - - - - - - -\n\n" +
+      "FTHWF close " + data.c + " cost around 0.40" +"\n\n" + 
       "- - - - - - - - - - - - - - - - - - -",
       });
     });

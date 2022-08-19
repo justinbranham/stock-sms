@@ -114,6 +114,21 @@ const jobBaba = new CronJob(
       "- - - - - - - - - - - - - - - - - - -",
       });
     });
+
+    finnhubClient.quote("ICPT", (error, data, response) => {
+      //prices.push(data.c);
+      //console.log("third " + prices);
+      //
+      client.messages.create({
+        to: process.env.YOURPHONENUMBER,
+        from: process.env.YOURTWILIOPHONENUMBER,
+        body:
+          // prettier-ignore
+          "- - - - - - - - - - - - -\n\n" +
+      "ICPT close " + data.c + " target 20.00" +"\n\n" + 
+      "- - - - - - - - - - - - - - - - - - -",
+      });
+    });
   },
   null,
   true,

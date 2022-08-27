@@ -17,7 +17,8 @@ app.use(
 
 dotenv.config();
 
-const cronTime = "1 16 * * 1-5";
+// const cronTime = "1 16 * * 1-5";
+const cronTime = "* * * * *";
 const client = twilio(process.env.ACCOUNTSID, process.env.AUTHTOKEN);
 
 const api_key = finnhub.ApiClient.instance.authentications["api_key"];
@@ -59,8 +60,9 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "BABA close " + data.c + " cost 146.70" + "\n\n" +
-      "- - - - - - - - - - - - - - - - - - -",
+      "BABA close " + data.c + " cost 146.70",
+        //  + "\n\n" +
+        // "- - - - - - - - - - - - - - - - - - -"
       });
     });
 
@@ -77,8 +79,9 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "MNKD close " + data.c + " cost 4.991"+ "\n\n" +
-      "- - - - - - - - - - - - - - - - - - -",
+      "MNKD close " + data.c + " cost 4.991",
+        // + "\n\n" +
+        // "- - - - - - - - - - - - - - - - - - -"
       });
     });
 
@@ -95,8 +98,9 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "REUN close " + data.c + " cost around 10.25" +"\n\n" + 
-      "- - - - - - - - - - - - - - - - - - -",
+      "REUN close " + data.c + " cost around 10.25",
+        //  +"\n\n" +
+        // "- - - - - - - - - - - - - - - - - - -"
       });
     });
 
@@ -110,8 +114,9 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "FTHWF close " + data.c + " cost around 0.40" +"\n\n" + 
-      "- - - - - - - - - - - - - - - - - - -",
+      "FTHWF close " + data.c + " cost around 0.40",
+        //  +"\n\n" +
+        // "- - - - - - - - - - - - - - - - - - -"
       });
     });
 
@@ -125,8 +130,9 @@ const jobBaba = new CronJob(
         body:
           // prettier-ignore
           "- - - - - - - - - - - - -\n\n" +
-      "ICPT close " + data.c + " target 20.00" +"\n\n" + 
-      "- - - - - - - - - - - - - - - - - - -",
+      "ICPT close " + data.c + " target 20.00",
+        //  +"\n\n" +
+        // "- - - - - - - - - - - - - - - - - - -"
       });
     });
   },

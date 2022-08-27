@@ -59,10 +59,10 @@ const jobBaba = new CronJob(
         from: process.env.YOURTWILIOPHONENUMBER,
         body:
           // prettier-ignore
-          "- - - - - - - - - - - - -\n\n" +
-      "BABA close " + data.c + " cost 146.70",
-        //  + "\n\n" +
-        // "- - - - - - - - - - - - - - - - - - -"
+          "- - - - - - - - - - - - -\n" +
+      "BABA close " + data.c + " cost 146.70"
+         + "\n" +
+        "- - - - - - - - - - - - - - - - - - -",
       });
     });
 
@@ -78,10 +78,10 @@ const jobBaba = new CronJob(
         from: process.env.YOURTWILIOPHONENUMBER,
         body:
           // prettier-ignore
-          "- - - - - - - - - - - - -\n\n" +
-      "MNKD close " + data.c + " cost 4.991",
-        // + "\n\n" +
-        // "- - - - - - - - - - - - - - - - - - -"
+          "- - - - - - - - - - - - -\n" +
+      "MNKD close " + data.c + " cost 4.991"
+        + "\n" +
+        "- - - - - - - - - - - - - - - - - - -",
       });
     });
 
@@ -97,10 +97,10 @@ const jobBaba = new CronJob(
         from: process.env.YOURTWILIOPHONENUMBER,
         body:
           // prettier-ignore
-          "- - - - - - - - - - - - -\n\n" +
-      "REUN close " + data.c + " cost around 10.25",
-        //  +"\n\n" +
-        // "- - - - - - - - - - - - - - - - - - -"
+          "- - - - - - - - - - - - -\n" +
+      "REUN close " + data.c + " cost 10.25"
+         +"\n" +
+        "- - - - - - - - - - - - - - - - - - -",
       });
     });
 
@@ -113,10 +113,10 @@ const jobBaba = new CronJob(
         from: process.env.YOURTWILIOPHONENUMBER,
         body:
           // prettier-ignore
-          "- - - - - - - - - - - - -\n\n" +
-      "FTHWF close " + data.c + " cost around 0.40",
-        //  +"\n\n" +
-        // "- - - - - - - - - - - - - - - - - - -"
+          "- - - - - - - - - - - - -\n" +
+      "FTHWF close " + data.c + " cost 0.40"
+         +"\n" +
+        "- - - - - - - - - - - - - - - - - - -",
       });
     });
 
@@ -129,10 +129,10 @@ const jobBaba = new CronJob(
         from: process.env.YOURTWILIOPHONENUMBER,
         body:
           // prettier-ignore
-          "- - - - - - - - - - - - -\n\n" +
-      "ICPT close " + data.c + " target 20.00",
-        //  +"\n\n" +
-        // "- - - - - - - - - - - - - - - - - - -"
+          "- - - - - - - - - - - - -\n" +
+      "ICPT close " + data.c + " target 20.00"
+         +"\n" +
+        "- - - - - - - - - - - - - - - - - - -",
       });
     });
   },
